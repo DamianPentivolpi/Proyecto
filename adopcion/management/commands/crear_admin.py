@@ -11,7 +11,7 @@ class Command(BaseCommand):
         parser.add_argument('email', type=str, help='El email del administrador')
         parser.add_argument('contraseña', type=str, help='La contraseña para el nuevo administrador')
         
-        # Argumento opcional para evitar la aprobación de adopciones
+        #argumento para evitar la aprobacion de adopciones
         parser.add_argument(
             '--no-aprobar',
             action='store_false',
@@ -27,7 +27,7 @@ class Command(BaseCommand):
         puede_aprobar = options['puede_aprobar']
 
         try:
-            # Verificar si ya existe un admin con ese código o email
+            # verifica si ya existe un admin con ese codigo o email
             if Administrador.objects.filter(codigo_admin=codigo_admin).exists():
                 self.stdout.write(self.style.ERROR(f'Ya existe un administrador con el código {codigo_admin}'))
                 return
@@ -36,7 +36,7 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.ERROR(f'Ya existe un administrador con el email {email}'))
                 return
 
-            # Crear el nuevo administrador
+            # Crea el nuevo administrador python manage.py crear_admin "damian admin 2" "damian pentivolpi" damian@adminadop.com damianadop1302
             admin = Administrador.objects.create(
                 codigo_admin=codigo_admin,
                 nombre=nombre,

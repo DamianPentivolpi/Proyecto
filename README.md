@@ -1,13 +1,19 @@
 # Proyecto de Adopción de Perros
 
 Este es un proyecto de aplicación web desarrollado con Django para gestionar un sistema de adopción de perros.
-
-
-
+cuenta usuario creada o crear: 
+            email:Damian@gmail.com
+            contraseña:chiqui1302
+Cuenta admin de gestion :
+        email:damian@adminadop.com
+        contra : damianadop1302
+cuenta admin django: 
+            username:damian
+            contraseña :damian1313
 lenguaje usado:
 
 Python con el framework Django.
-HTML, CSS.
+HTML con jinja, CSS.
 SQLite (para desarrollo).
 
 ## Funcionalidades
