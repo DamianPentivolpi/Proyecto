@@ -36,7 +36,7 @@ La plataforma ofrece dos roles principales: Adoptante y Administrador
    
    Ver Detalles del Perro: Acceder a un perfil detallado para cada perro, que incluye información sobre sus vacunas y temperamento.
 	
-    Solicitar Adopción: Los usuarios pueden enviar una solicitud de adopción para un perro y ponerlos en reservados
+   Solicitar Adopción: Los usuarios pueden enviar una solicitud de adopción para un perro y ponerlos en reservados
    
    Gestión de Perfil:
        Actualizar su información personal (nombre, email, contraseña).
