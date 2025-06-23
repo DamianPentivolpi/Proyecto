@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Raza - Administrador</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'lista.css' %}">
+    <link rel="stylesheet" href="{% static 'Admin/adminrazaeliminar.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="admin-header">
+            <h1> Eliminar Raza</h1>
+            <p>Confirmar eliminación de la raza del sistema</p>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="confirm-container">
+            <h2>¿Estás seguro?</h2>
+            <p>Esta acción no se puede deshacer. La raza será eliminada permanentemente del sistema.</p>
+            
+            {% if perros_con_raza > 0 %}
+                <div class="warning-message">
+                    <strong> Advertencia:</strong> Esta raza tiene {{ perros_con_raza }} perro(s) asociado(s). 
+                    Al eliminar la raza, estos perros quedarán sin raza asignada.
+                </div>
+            {% endif %}
+            
+            <div class="raza-info">
+                <h3>Información de la Raza</h3>
+                <p><strong>Nombre:</strong> {{ raza.tipo_raza }}</p>
+                <p><strong>Tamaño:</strong> {{ raza.get_tamaño_display }}</p>
+                <p><strong>Peso:</strong> {{ raza.peso }} kg</p>
+                <p><strong>Perros asociados:</strong> {{ perros_con_raza }}</p>
+            </div>
+            
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn-danger">🗑️ Sí, Eliminar Raza</button>
+            </form>
+            
+            <a href="{% url 'adminrazalista' %}" class="btn-cancel" Cancelar</a>
+        </div>
+    </div>
+</body>
+</html> 

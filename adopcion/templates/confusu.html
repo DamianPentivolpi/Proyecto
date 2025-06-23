@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración de Usuario - Adopciones IFTs11</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'confusu.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1> Configuración</h1>
+            <h2>Gestiona tu información personal</h2>
+            <p style="color: #667eea; font-weight: 600; margin-bottom: 15px;"> {{ usuario.nombre_usu }}</p>
+            <a href="/lista" class="back-link">← Volver a la lista</a>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form action="" method="POST">
+            {% csrf_token %}
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="{{ form.nombre.id_for_label }}">{{ form.nombre.label }}</label>
+                    {{ form.nombre }}
+                    {% if form.nombre.errors %}
+                        <div class="error-message">
+                            {% for error in form.nombre.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.dni.id_for_label }}">{{ form.dni.label }} </label>
+                    {{ form.dni }}
+                    <small style="color: #718096; font-size: 0.8rem; display: block; margin-top: 5px;">
+                        El DNI no se puede modificar
+                    </small>
+                    {% if form.dni.errors %}
+                        <div class="error-message">
+                            {% for error in form.dni.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="error-message">
+                        {% for error in form.email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="password-section">
+                <h3> Cambiar Contraseña</h3>
+                
+                <div class="form-group">
+                    <label for="{{ form.password_actual.id_for_label }}">{{ form.password_actual.label }}</label>
+                    {{ form.password_actual }}
+                    {% if form.password_actual.errors %}
+                        <div class="error-message">
+                            {% for error in form.password_actual.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.nueva_password.id_for_label }}">{{ form.nueva_password.label }}</label>
+                        {{ form.nueva_password }}
+                        {% if form.nueva_password.errors %}
+                            <div class="error-message">
+                                {% for error in form.nueva_password.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.confirmar_nueva_password.id_for_label }}">{{ form.confirmar_nueva_password.label }}</label>
+                        {{ form.confirmar_nueva_password }}
+                        {% if form.confirmar_nueva_password.errors %}
+                            <div class="error-message">
+                                {% for error in form.confirmar_nueva_password.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="buttons">
+                <button type="submit" class="btn btn-primary"> Guardar Cambios</button>
+                <a href="/lista" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+
+        <hr class="divider">
+
+        <div class="adoption-history">
+            <h3>Historial de Adopciones</h3>
+            
+            {% if historial_adopciones %}
+                <div class="history-list">
+                    {% for historial in historial_adopciones %}
+                    <div class="history-item">
+                        <div class="history-header">
+                            <div class="dog-info">
+                                <h4> {{ historial.perro_adoptado.nombre }}</h4>
+                                <p class="dog-details">
+                                    {{ historial.perro_adoptado.raza.tipo_raza }} • 
+                                    {{ historial.perro_adoptado.edad }} años • 
+                                    <span class="size-badge size-{{ historial.perro_adoptado.raza.tamaño }}">
+                                        {{ historial.perro_adoptado.raza.tamaño }}
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="status-info">
+                                {% if historial.adopcion_completada %}
+                                    <span class="status-badge status-completed">Adopción Completada</span>
+                                {% elif historial.fecha.confirmar %}
+                                    <span class="status-badge status-approved"> Solicitud Aprobada</span>
+                                {% else %}
+                                    <span class="status-badge status-pending"> En Proceso</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="history-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Fecha de solicitud:</span>
+                                <span class="detail-value">{{ historial.fecha.fecha|date:"d/m/Y" }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Estado del perro:</span>
+                                <span class="detail-value">
+                                    <span class="status-badge status-{{ historial.perro_adoptado.estado }}">
+                                        {{ historial.perro_adoptado.estado|title }}
+                                    </span>
+                                </span>
+                            </div>
+                            {% if historial.adopcion_completada %}
+                                <div class="detail-row">
+                                    <span class="detail-label">Resultado:</span>
+                                    <span class="detail-value success-text">Adopción realizada</span>
+                                </div>
+                            {% elif historial.fecha.confirmar %}
+                                <div class="detail-row">
+                                    <span class="detail-label">Resultado:</span>
+                                    <span class="detail-value success-text">Solicitud aprobada </span>
+                                </div>
+                            {% else %}
+                                <div class="detail-row">
+                                    <span class="detail-label">Resultado:</span>
+                                    <span class="detail-value pending-text">Solicitud en revisión </span>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="no-history">
+                    <h4>No tienes solicitudes de adopción</h4>
+                    <p>Aún no has realizado ninguna solicitud de adopción.</p>
+                    <a href="/lista" class="btn btn-primary">Ver perros disponibles</a>
+                </div>
+            {% endif %}
+        </div>
+
+        <hr class="divider">
+
+        <div class="info-note">
+            <h4>Enlaces útiles</h4>
+            <p>
+                <a href="/lista" style="color: #667eea; text-decoration: none; font-weight: 600;"> Ver lista de perros</a> | 
+                <a href="/" style="color: #667eea; text-decoration: none; font-weight: 600;"> Ir al inicio</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html> 

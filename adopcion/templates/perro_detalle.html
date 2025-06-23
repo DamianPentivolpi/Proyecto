@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ perro.nombre }} - Adopciones IFTs11</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'perro_detalle.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Detalles del Perro</h1>
+            <h2>Detalles sobre {{ perro.nombre }}</h2>
+            <a href="/lista" class="back-link">← Volver a la lista</a>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="nav-bar">
+            <div class="nav-buttons">
+                <span class="user-welcome"> Hola, {{ usuario_actual.nombre }}</span>
+                <a href="/confusu" class="btn btn-primary"> Configuración</a>
+                <a href="/logout" class="btn btn-danger">Cerrar Sesión</a>
+            </div>
+        </div>
+
+        <!-- Sección Hero del Perro -->
+        <div class="perro-hero">
+
+            <div class="perro-info-basic">
+                <h1 class="perro-nombre">{{ perro.nombre }}</h1>
+                <div class="perro-raza">{{ perro.raza.tipo_raza }}</div>
+                <div class="perro-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">{{ perro.edad }}</div>
+                        <div class="stat-label">Años</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">{{ perro.raza.tamaño|title }}</div>
+                        <div class="stat-label">Tamaño</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">{{ perro.raza.peso }} kg</div>
+                        <div class="stat-label">Peso</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">
+                            <span class="status-badge status-{{ perro.estado_salud }}">{{ perro.estado_salud }}</span>
+                        </div>
+                        <div class="stat-label">Salud</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Secciones de Información -->
+        <div class="info-sections">
+            <!-- Información Básica -->
+            <div class="info-section">
+                <h3>Información Básica</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Nombre:</span>
+                        <span class="info-value">{{ perro.nombre }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Raza:</span>
+                        <span class="info-value">{{ perro.raza.tipo_raza }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Edad:</span>
+                        <span class="info-value">{{ perro.edad }} años</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Tamaño:</span>
+                        <span class="info-value">
+                            <span class="size-badge size-{{ perro.raza.tamaño }}">{{ perro.raza.tamaño }}</span>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Peso:</span>
+                        <span class="info-value">{{ perro.raza.peso }} kg</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Estado de Salud:</span>
+                        <span class="info-value">
+                            <span class="status-badge status-{{ perro.estado_salud }}">{{ perro.estado_salud }}</span>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Estado:</span>
+                        <span class="info-value">{{ perro.estado|title }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Información de Salud -->
+            <div class="info-section">
+                <h3> Información de Salud</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Estado General:</span>
+                        <span class="info-value">
+                            <span class="status-badge status-{{ perro.estado_salud }}">{{ perro.estado_salud }}</span>
+                        </span>
+                    </div>
+                </div>
+
+                {% if vacunas %}
+                <h4 style="margin-top: 20px; color: #4a5568; font-size: 1.1rem;">Vacunas</h4>
+                <div class="vaccine-grid">
+                    <div class="vaccine-item">
+                        <div class="vaccine-status {% if vacunas.moquillo_canino %}yes{% else %}no{% endif %}">
+                            {% if vacunas.moquillo_canino %}✓{% else %}✗{% endif %}
+                        </div>
+                        <span>Moquillo Canino</span>
+                    </div>
+                    <div class="vaccine-item">
+                        <div class="vaccine-status {% if vacunas.parvovirus %}yes{% else %}no{% endif %}">
+                            {% if vacunas.parvovirus %}✓{% else %}✗{% endif %}
+                        </div>
+                        <span>Parvovirus</span>
+                    </div>
+                    <div class="vaccine-item">
+                        <div class="vaccine-status {% if vacunas.hepatitis_infecciosa_canina %}yes{% else %}no{% endif %}">
+                            {% if vacunas.hepatitis_infecciosa_canina %}✓{% else %}✗{% endif %}
+                        </div>
+                        <span>Hepatitis Infecciosa</span>
+                    </div>
+                    <div class="vaccine-item">
+                        <div class="vaccine-status {% if vacunas.rabia %}yes{% else %}no{% endif %}">
+                            {% if vacunas.rabia %}✓{% else %}✗{% endif %}
+                        </div>
+                        <span>Rabia</span>
+                    </div>
+                    <div class="vaccine-item">
+                        <div class="vaccine-status {% if vacunas.leptos_pirosis %}yes{% else %}no{% endif %}">
+                            {% if vacunas.leptos_pirosis %}✓{% else %}✗{% endif %}
+                        </div>
+                        <span>Leptospirosis</span>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Temperamento -->
+            {% if temperamento %}
+            <div class="info-section">
+                <h3>Temperamento</h3>
+                <div class="temperament-grid">
+                    <div class="temperament-item">
+                        <div class="temperament-status {% if temperamento.enojado %}yes{% else %}no{% endif %}">
+                            {% if temperamento.enojado %}✓{% else %}✗{% endif %}
+                        </div>
+                        <span>Enojado/Agresivo</span>
+                    </div>
+                    <div class="temperament-item">
+                        <div class="temperament-status {% if temperamento.tranquilo %}yes{% else %}no{% endif %}">
+                            {% if temperamento.tranquilo %}✓{% else %}✗{% endif %}
+                        </div>
+                        <span>Tranquilo</span>
+                    </div>
+                    <div class="temperament-item">
+                        <div class="temperament-status {% if temperamento.travieso %}yes{% else %}no{% endif %}">
+                            {% if temperamento.travieso %}✓{% else %}✗{% endif %}
+                        </div>
+                        <span>Travieso</span>
+                    </div>
+                    <div class="temperament-item">
+                        <div class="temperament-status {% if temperamento.alegre %}yes{% else %}no{% endif %}">
+                            {% if temperamento.alegre %}✓{% else %}✗{% endif %}
+                        </div>
+                        <span>Alegre</span>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Sección de Adopción -->
+        <div class="adoption-section">
+            {% if perro.estado == 'disponible' %}
+                <h3> ¿Te gustaría adoptar a {{ perro.nombre }}?</h3>
+                
+                <div class="adoption-buttons">
+                    {% if solicitud_existente %}
+                        <div class="alert alert-info">
+                            Ya tienes una solicitud de adopción pendiente para {{ perro.nombre }}.
+                        </div>
+                    {% else %}
+                        <form method="POST" action="/perro/{{ perro.id }}/solicitar/" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success">Solicitar Adopción</button>
+                        </form>
+                    {% endif %}
+                    <a href="/lista" class="btn btn-secondary">Ver otros perros</a>
+                </div>
+            {% elif perro.estado == 'reservado' %}
+                <h3>{{ perro.nombre }} está reservado</h3>
+                
+                <div class="adoption-buttons">
+                    <div class="alert alert-info">
+                        Este perro está actualmente reservado para adopción.
+                    </div>
+                    <a href="/lista" class="btn btn-secondary">Ver otros perros</a>
+                </div>
+            {% elif perro.estado == 'adoptado' %}
+                <h3>{{ perro.nombre }} ya fue adoptado</h3>             
+                <div class="adoption-buttons">
+                    <div class="alert alert-success">
+                    Este perro ya tiene un hogar definitivo.
+                    </div>
+                    <a href="/lista" class="btn btn-secondary">Ver otros perros</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html> 

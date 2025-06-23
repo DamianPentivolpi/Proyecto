@@ -1,0 +1,502 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    backdrop-filter: blur(10px);
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.header h1 {
+    color: #4a5568;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header h2 {
+    color: #718096;
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.back-link {
+    display: inline-block;
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 20px;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: #764ba2;
+}
+
+.nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f7fafc;
+    border-radius: 15px;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.nav-buttons .btn {
+    margin: 0;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+}
+
+.user-welcome {
+    color: #4a5568;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 8px 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.btn-secondary {
+    background: #718096;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #4a5568;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(113, 128, 150, 0.3);
+}
+
+.btn-danger {
+    background: #e53e3e;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #c53030;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(229, 62, 62, 0.3);
+}
+
+.btn-success {
+    background: #48bb78;
+    color: white;
+}
+
+.btn-success:hover {
+    background: #38a169;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(72, 187, 120, 0.3);
+}
+
+.btn-info {
+    background: #4299e1;
+    color: white;
+}
+
+.btn-info:hover {
+    background: #3182ce;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(66, 153, 225, 0.3);
+}
+
+.perro-hero {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 30px;
+    margin-bottom: 40px;
+    background: #f7fafc;
+    border-radius: 20px;
+    padding: 30px;
+}
+
+.perro-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    font-size: 4rem;
+    color: white;
+    min-height: 200px;
+}
+
+.perro-info-basic {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.perro-nombre {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #4a5568;
+    margin-bottom: 10px;
+}
+
+.perro-raza {
+    font-size: 1.3rem;
+    color: #718096;
+    margin-bottom: 20px;
+}
+
+.perro-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+}
+
+.stat-item {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: #718096;
+    text-transform: uppercase;
+}
+
+.info-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.info-section {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.info-section h3 {
+    color: #4a5568;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 10px;
+}
+
+.info-grid {
+    display: grid;
+    gap: 15px;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f7fafc;
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    color: #718096;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.info-value {
+    color: #4a5568;
+    font-weight: 500;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-sano {
+    background: #c6f6d5;
+    color: #2f855a;
+}
+
+.status-tratamiento {
+    background: #fef5e7;
+    color: #d69e2e;
+}
+
+.status-enfermo {
+    background: #fed7d7;
+    color: #c53030;
+}
+
+.size-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.size-miniatura {
+    background: #e6fffa;
+    color: #319795;
+}
+
+.size-pequeño {
+    background: #f0fff4;
+    color: #38a169;
+}
+
+.size-mediano {
+    background: #fffaf0;
+    color: #d69e2e;
+}
+
+.size-grande {
+    background: #fef5e7;
+    color: #dd6b20;
+}
+
+.size-gigante {
+    background: #fed7d7;
+    color: #c53030;
+}
+
+.vaccine-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.vaccine-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: #f7fafc;
+    border-radius: 8px;
+}
+
+.vaccine-status {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.vaccine-status.yes {
+    background: #48bb78;
+    color: white;
+}
+
+.vaccine-status.no {
+    background: #e53e3e;
+    color: white;
+}
+
+.temperament-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.temperament-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: #f7fafc;
+    border-radius: 8px;
+}
+
+.temperament-status {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.temperament-status.yes {
+    background: #48bb78;
+    color: white;
+}
+
+.temperament-status.no {
+    background: #e53e3e;
+    color: white;
+}
+
+.adoption-section {
+    background: #ebf8ff;
+    border: 1px solid #bee3f8;
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.adoption-section h3 {
+    color: #2b6cb0;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.adoption-section p {
+    color: #4a5568;
+    font-size: 1rem;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.adoption-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.alert {
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 10px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.alert-warning {
+    background: #fef5e7;
+    border: 1px solid #fbd38d;
+    color: #d69e2e;
+}
+
+.alert-success {
+    background: #c6f6d5;
+    border: 1px solid #9ae6b4;
+    color: #2f855a;
+}
+
+.alert-info {
+    background: #bee3f8;
+    border: 1px solid #90cdf4;
+    color: #2b6cb0;
+}
+
+.alert-error {
+    background: #fed7d7;
+    border: 1px solid #feb2b2;
+    color: #c53030;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        margin: 10px;
+    }
+    
+    .header h1 {
+        font-size: 2rem;
+    }
+    
+    .perro-hero {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .perro-nombre {
+        font-size: 2rem;
+    }
+    
+    .info-sections {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .adoption-buttons {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+} 

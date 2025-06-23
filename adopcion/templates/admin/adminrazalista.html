@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Razas - Administrador</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'lista.css' %}">
+    <link rel="stylesheet" href="{% static 'Admin/adminrazalista.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="admin-header">
+            <h1>Gestión de Razas - Administrador</h1>
+            <p>Lista de todas las razas en el sistema</p>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Botón Crear -->
+        <a href="{% url 'adminrazacrear' %}" class="btn-create"> Agregar Nueva Raza</a>
+
+        <!-- Tabla de Razas -->
+        <div class="razas-table">
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Raza</th>
+                        <th>Tamaño</th>
+                        <th>Peso (kg)</th>
+                        <th>Perros</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for raza in razas %}
+                    <tr>
+                        <td>{{ raza.id }}</td>
+                        <td><strong>{{ raza.tipo_raza }}</strong></td>
+                        <td>
+                            <span class="size-badge size-{{ raza.tamaño }}">
+                                {{ raza.get_tamaño_display }}
+                            </span>
+                        </td>
+                        <td>{{ raza.peso }} kg</td>
+                        <td>{{ raza.perro_set.count }} perros</td>
+                        <td>
+                            <div class="admin-actions">
+                                <a href="{% url 'adminrazaeditar' raza.id %}" class="btn-small btn-edit"> Editar</a>
+                                <a href="{% url 'adminrazaeliminar' raza.id %}" class="btn-small btn-delete"> Eliminar</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 30px; color: #6b7280;">
+                            No hay razas registradas en el sistema.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Navegación -->
+        <div class="admin-actions" style="justify-content: center; margin-top: 30px;">
+            <a href="{% url 'adminpantalla' %}" class="btn-admin"> Dashboard</a>
+            <a href="{% url 'adminperrolista' %}" class="btn-admin"> Gestionar Perros</a>
+            <a href="{% url 'lista' %}" class="btn-admin"> Ver Público</a>
+        </div>
+    </div>
+</body>
+</html> 

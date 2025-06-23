@@ -1,9 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Perros - Adopciones IFTs11</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'lista.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Perros Disponibles</h1>
+            <h2>Encontra a tu compañero perfecto</h2>
+        </div>
 
+        <div class="nav-bar">
+             <div class="nav-buttons">
+                <span class="user-welcome">Hola, {{ usuario_actual.nombre }}</span>
+                <a href="/confusu" class="btn btn-primary">Configuración</a>
+                <a href="/logout" class="btn btn-danger">Cerrar Sesión</a>
+            </div>
+        </div>
 
-<h1>Bienvenido </h1>
+        <div class="filters-section">
+            <div class="filters-header">
+                <h3 class="filters-title">Filtros de Búsqueda</h3>
+            </div>
 
-<h2>Lista</h2>
+            <form method="GET" action="/lista" id="filters-form">
+                <div class="filters-grid">
+                    <div class="filter-group">
+                        <label for="raza">Raza</label>
+                        <select name="raza" id="raza" onchange="this.form.submit()">
+                            <option value="">Todas las razas</option>
+                            {% for raza in razas_disponibles %}
+                                <option value="{{ raza.tipo_raza }}" {% if filtros_activos.raza == raza.tipo_raza %}selected{% endif %}>
+                                    {{ raza.tipo_raza }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="edad">Edad (años)</label>
+                        <select name="edad" id="edad" onchange="this.form.submit()">
+                            <option value="">Todas las edades</option>
+                            {% for edad in edades_disponibles %}
+                                <option value="{{ edad }}" {% if filtros_activos.edad == edad|stringformat:"s" %}selected{% endif %}>
+                                    {{ edad }} años
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="tamaño">Tamaño</label>
+                        <select name="tamaño" id="tamaño" onchange="this.form.submit()">
+                            <option value="">Todos los tamaños</option>
+                            {% for tamaño in tamaños_disponibles %}
+                                <option value="{{ tamaño }}" {% if filtros_activos.tamaño == tamaño %}selected{% endif %}>
+                                    {{ tamaño|title }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </form>
 
+            {% if filtros_activos.raza or filtros_activos.edad or filtros_activos.tamaño %}
+                <div class="active-filters">
+                    {% if filtros_activos.raza %}
+                        <span class="filter-tag">
+                            <span>Raza: {{ filtros_activos.raza }}</span>
+                            <a href="?{% if filtros_activos.edad %}edad={{ filtros_activos.edad }}{% endif %}{% if filtros_activos.tamaño %}{% if filtros_activos.edad %}&{% endif %}tamaño={{ filtros_activos.tamaño }}{% endif %}" class="remove-filter">✖</a>
+                        </span>
+                    {% endif %}
+                    
+                    {% if filtros_activos.edad %}
+                        <span class="filter-tag">
+                            <span>Edad: {{ filtros_activos.edad }} años</span>
+                            <a href="?{% if filtros_activos.raza %}raza={{ filtros_activos.raza }}{% endif %}{% if filtros_activos.tamaño %}{% if filtros_activos.raza %}&{% endif %}tamaño={{ filtros_activos.tamaño }}{% endif %}" class="remove-filter">✖</a>
+                        </span>
+                    {% endif %}
+                    
+                    {% if filtros_activos.tamaño %}
+                        <span class="filter-tag">
+                            <span>Tamaño: {{ filtros_activos.tamaño|title }}</span>
+                            <a href="?{% if filtros_activos.raza %}raza={{ filtros_activos.raza }}{% endif %}{% if filtros_activos.edad %}{% if filtros_activos.raza %}&{% endif %}edad={{ filtros_activos.edad }}{% endif %}" class="remove-filter">✖</a>
+                        </span>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
 
-<a href="/"><button>log out</button></a>
-
+        {% if perros_disponibles %}
+            <div class="dogs-grid">
+                {% for perro in perros_disponibles %}
+                <div class="dog-card">
+                    <div class="dog-header">
+                        <div class="dog-info">
+                            <h3>{{ perro.nombre }}</h3>
+                            <div class="dog-breed">{{ perro.raza.tipo_raza }}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="dog-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Edad:</span>
+                            <span class="detail-value">{{ perro.edad }} años</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <span class="detail-label">Tamaño:</span>
+                            <span class="size-badge size-{{ perro.raza.tamaño }}">{{ perro.raza.tamaño }}</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <span class="detail-label">Peso:</span>
+                            <span class="detail-value">{{ perro.raza.peso }} kg</span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <span class="detail-label">Salud:</span>
+                            <span class="status-badge status-{{ perro.estado_salud }}">{{ perro.estado_salud }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="dog-actions">
+                        <a href="/perro/{{ perro.id }}/" class="btn btn-info">Más Info</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="no-dogs">
+                <a href="/" class="btn btn-primary">Volver al Inicio</a>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html> 

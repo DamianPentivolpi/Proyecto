@@ -1,9 +1,64 @@
-<h1>Adoptociones Ifts11</h1>
-<h2>Bienvenidos</h2>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adopciones IFTs11 - Encuentra tu compañero perfecto</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>Adopciones IFTs11</h1>
+            <h2>Encontra a tu compañero perfecto</h2>
+        </div>
 
-<input type="email">
-<input type="password">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
 
-<button><a href="/registro">Registrate</a></button>
-<button><a href="/lista">Ingresar</a></button>
-<button><a href="/admin">admin</a></button>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="error-message">
+                        {% for error in form.email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+                {{ form.password }}
+                {% if form.password.errors %}
+                    <div class="error-message">
+                        {% for error in form.password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <button type="submit" class="btn btn-secondary">Ingresar</button>
+        </form>
+
+        <div class="buttons">
+            <a href="/registro" class="btn btn-primary">Registrarse</a>
+            <a href="/admin" class="btn btn-admin">Administrador django</a>
+        </div>
+
+        <hr class="divider">
+
+ 
+    </div>
+</body>
+</html>

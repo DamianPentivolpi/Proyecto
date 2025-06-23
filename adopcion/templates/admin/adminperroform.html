@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ accion }} Perro - Administrador</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'lista.css' %}">
+    <link rel="stylesheet" href="{% static 'Admin/adminperroform.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="admin-header">
+            <h1> {{ accion }} Perro</h1>
+            <p>{% if accion == 'Crear' %}Agregar nuevo perro al sistema{% else %}Modificar información del perro{% endif %}</p>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="form-container">
+            <form method="POST">
+                {% csrf_token %}
+                
+                <!-- Información básica del perro -->
+                <h3 style="color: #374151; margin-bottom: 20px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">
+                Información Básica
+                </h3>
+                
+                <div class="form-group">
+                    <label for="{{ perro_form.nombre.id_for_label }}">{{ perro_form.nombre.label }}</label>
+                    {{ perro_form.nombre }}
+                    {% if perro_form.nombre.errors %}
+                        <div style="color: #ef4444; font-size: 14px; margin-top: 5px;">
+                            {% for error in perro_form.nombre.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ perro_form.edad.id_for_label }}">{{ perro_form.edad.label }}</label>
+                    {{ perro_form.edad }}
+                    {% if perro_form.edad.errors %}
+                        <div style="color: #ef4444; font-size: 14px; margin-top: 5px;">
+                            {% for error in perro_form.edad.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ perro_form.raza.id_for_label }}">{{ perro_form.raza.label }}</label>
+                    {{ perro_form.raza }}
+                    {% if perro_form.raza.errors %}
+                        <div style="color: #ef4444; font-size: 14px; margin-top: 5px;">
+                            {% for error in perro_form.raza.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ perro_form.estado_salud.id_for_label }}">{{ perro_form.estado_salud.label }}</label>
+                    {{ perro_form.estado_salud }}
+                    {% if perro_form.estado_salud.errors %}
+                        <div style="color: #ef4444; font-size: 14px; margin-top: 5px;">
+                            {% for error in perro_form.estado_salud.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ perro_form.estado.id_for_label }}">{{ perro_form.estado.label }}</label>
+                    {{ perro_form.estado }}
+                    {% if perro_form.estado.errors %}
+                        <div style="color: #ef4444; font-size: 14px; margin-top: 5px;">
+                            {% for error in perro_form.estado.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Sección de Vacunas -->
+                <h3 style="color: #374151; margin: 30px 0 20px 0; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">
+                 Vacunas Aplicadas
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    {% for field in vacuna_form %}
+                        <div class="form-group">
+                            <div class="form-checkbox">
+                                {{ field }}
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            </div>
+                            {% if field.errors %}
+                                <div style="color: #ef4444; font-size: 14px; margin-top: 5px;">
+                                    {% for error in field.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <!-- Sección de Temperamento -->
+                <h3 style="color: #374151; margin: 30px 0 20px 0; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">
+                    Temperamento
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    {% for field in temperamento_form %}
+                        <div class="form-group">
+                            <div class="form-checkbox">
+                                {{ field }}
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            </div>
+                            {% if field.errors %}
+                                <div style="color: #ef4444; font-size: 14px; margin-top: 5px;">
+                                    {% for error in field.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <button type="submit" class="btn-submit">
+                    {% if accion == 'Crear' %}➕ Crear Perro{% else %} Guardar Cambios{% endif %}
+                </button>
+            </form>
+            
+            <a href="{% url 'adminperrolista' %}" class="btn-cancel"> Cancelar</a>
+        </div>
+    </div>
+</body>
+</html> 

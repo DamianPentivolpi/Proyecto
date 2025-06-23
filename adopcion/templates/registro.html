@@ -1,13 +1,90 @@
-<h1>Bienvenido!</h1>
-<h2>Registrate</h2>
-<form action="">
-    <p>Nombre</p>
-    <input type="text">
-    <p>Dni</p>
-    <input type="text">
-    <p>email</p>
-    <input type="email">
-    <p>contraseña</p>
-    <input type="password">
-    <button><a href="/lista">Registrarse</a></button>
-</form>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Adopciones IFTs11</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'registro.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Registro</h1>
+            <h2>Unite a nuestra comunidad de adopción</h2>
+            <a href="/" class="back-link">← Volver al inicio</a>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="{{ form.nombre.id_for_label }}">{{ form.nombre.label }}</label>
+                    {{ form.nombre }}
+                    {% if form.nombre.errors %}
+                        <div class="error-message">
+                            {% for error in form.nombre.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.dni.id_for_label }}">{{ form.dni.label }}</label>
+                    {{ form.dni }}
+                    {% if form.dni.errors %}
+                        <div class="error-message">
+                            {% for error in form.dni.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="error-message">
+                        {% for error in form.email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+                {{ form.password }}
+                {% if form.password.errors %}
+                    <div class="error-message">
+                        {% for error in form.password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="buttons">
+                <button type="submit" class="btn btn-primary">Crear cuenta</button>
+                <a href="/" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+
+        <hr class="divider">
+
+        <p style="color: #718096; font-size: 0.9rem;">
+            ¿Ya tenes una cuenta? <a href="/" style="color: #667eea; text-decoration: none; font-weight: 600;">Inicia sesión acá</a>
+        </p>
+    </div>
+</body>
+</html> 

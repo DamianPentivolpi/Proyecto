@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar Adopción - Administrador</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'lista.css' %}">
+    <link rel="stylesheet" href="{% static 'Admin/adminconfirmaradop.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="admin-header">
+            <h1>Confirmar Adopción</h1>
+            <p>Finalizar proceso de adopción y cambiar estado del perro</p>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="confirm-container">
+            <h2>Confirmar Adopción Exitosa</h2>
+            
+            <div class="adopcion-info">
+                <h3>Detalles de la Adopción</h3>
+                <div class="info-grid">
+                    <div class="info-section">
+                        <h4> Información del Perro</h4>
+                        <p><strong>Nombre:</strong> {{ perro.nombre }}</p>
+                        <p><strong>Raza:</strong> {{ perro.raza.tipo_raza|default:"Sin raza" }}</p>
+                        <p><strong>Edad:</strong> {{ perro.edad }} años</p>
+                        <p><strong>Estado actual:</strong> {{ perro.get_estado_display }}</p>
+                    </div>
+                    <div class="info-section">
+                        <h4>Información del Adoptante</h4>
+                        <p><strong>Nombre:</strong> {{ adoptante.nombre }}</p>
+                        <p><strong>Email:</strong> {{ adoptante.email }}</p>
+                        <p><strong>DNI:</strong> {{ adoptante.dni }}</p>
+                        <p><strong>Tipo:</strong> {{ adoptante.get_tipo_usuario }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <form method="POST">
+                {% csrf_token %}
+                
+                <div class="form-checkbox">
+                    {{ form.confirmar }}
+                    <label for="{{ form.confirmar.id_for_label }}">{{ form.confirmar.label }}</label>
+                </div>
+                
+                <button type="submit" class="btn-confirm"> Confirmar Adopción</button>
+            </form>
+            
+            <a href="{% url 'adminpantalla' %}" class="btn-cancel"> Cancelar</a>
+        </div>
+    </div>
+</body>
+</html> 

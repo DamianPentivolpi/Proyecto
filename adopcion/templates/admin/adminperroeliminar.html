@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Perro - Administrador</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'lista.css' %}">
+    <link rel="stylesheet" href="{% static 'Admin/adminperroeliminar.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="admin-header">
+            <h1>Eliminar Perro</h1>
+            <p>Confirmar eliminación del perro del sistema</p>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="confirm-container">
+            <h2>¿Estás seguro?</h2>
+            <p>Esta acción no se puede deshacer. El perro será eliminado permanentemente del sistema.</p>
+            
+            <div class="perro-info">
+                <h3>Información del Perro</h3>
+                <p><strong>Nombre:</strong> {{ perro.nombre }}</p>
+                <p><strong>Raza:</strong> {{ perro.raza.tipo_raza|default:"Sin raza" }}</p>
+                <p><strong>Edad:</strong> {{ perro.edad }} años</p>
+                <p><strong>Estado:</strong> {{ perro.get_estado_display }}</p>
+                <p><strong>Salud:</strong> {{ perro.get_estado_salud_display }}</p>
+            </div>
+            
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn-danger">🗑️ Sí, Eliminar Perro</button>
+            </form>
+            
+            <a href="{% url 'adminperrolista' %}" class="btn-cancel">Cancelar</a>
+        </div>
+    </div>
+</body>
+</html> 

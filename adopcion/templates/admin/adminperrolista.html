@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Perros - Administrador</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'lista.css' %}">
+    <link rel="stylesheet" href="{% static 'Admin/adminperrolista.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="admin-header">
+            <h1> Gestión de Perros - Administrador</h1>
+            <p>Lista completa de todos los perros en el sistema</p>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Filtros -->
+        <div class="filters-section">
+            <h3> Filtros</h3>
+            <form method="GET" class="filter-form">
+                <select name="estado">
+                    <option value="">Todos los estados</option>
+                    {% for estado in estados %}
+                        <option value="{{ estado.0 }}" {% if filtro_activo == estado.0 %}selected{% endif %}>
+                            {{ estado.1 }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Filtrar</button>
+                <a href="{% url 'adminperrolista' %}" class="btn-small btn-edit">Limpiar Filtros</a>
+            </form>
+        </div>
+
+        <!-- Botón Crear -->
+        <a href="{% url 'adminperrocrear' %}" class="btn-create"> Agregar Nuevo Perro</a>
+
+        <!-- Tabla de Perros -->
+        <div class="perros-table">
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Raza</th>
+                        <th>Edad</th>
+                        <th>Estado</th>
+                        <th>Salud</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for perro in perros %}
+                    <tr>
+                        <td>{{ perro.id }}</td>
+                        <td><strong>{{ perro.nombre }}</strong></td>
+                        <td>{{ perro.raza.tipo_raza|default:"Sin raza" }}</td>
+                        <td>{{ perro.edad }} años</td>
+                        <td>
+                            <span class="status-badge status-{{ perro.estado }}">
+                                {{ perro.get_estado_display }}
+                            </span>
+                        </td>
+                        <td>{{ perro.get_estado_salud_display }}</td>
+                        <td>
+                            <div class="admin-actions">
+                                <a href="{% url 'adminperroeditar' perro.id %}" class="btn-small btn-edit"> Editar</a>
+                                <a href="{% url 'adminperroeliminar' perro.id %}" class="btn-small btn-delete"> Eliminar</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" style="text-align: center; padding: 30px; color: #6b7280;">
+                            No hay perros registrados en el sistema.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+       
+        <!-- Navegación -->
+        <div class="admin-actions" style="justify-content: center; margin-top: 30px;">
+            <a href="{% url 'adminpantalla' %}" class="btn-admin"> Dashboard</a>
+            <a href="{% url 'adminrazalista' %}" class="btn-admin"> Gestionar Razas</a>
+            <a href="{% url 'lista' %}" class="btn-admin"> Ver Público</a>
+        </div>
+    </div>
+</body>
+</html> 
