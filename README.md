@@ -2,15 +2,19 @@
 
 Este es un proyecto de aplicación web desarrollado con Django para gestionar un sistema de adopción de perros.
 
-Cuenta usuario creada o crear: 
+
+-Cuenta usuario creada o crear: 
             email:Damian@gmail.com
             contraseña:chiqui1302
-Cuenta admin de gestion :
+
+-Cuenta admin de gestion :
         email:damian@adminadop.com
         contra : damianadop1302
-Cuenta admin django: 
+
+-Cuenta admin django: 
             username:damian
             contraseña :damian1313
+
 Lenguaje usado:
 
 Python con el framework Django.
